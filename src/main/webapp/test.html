@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>蓝牙锁操作界面</title>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="/script/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="/script/wx.js"></script>
+</head>
+<body style="font-size:40px">
+<h2 style="color: white;background-color: green;text-align: center;background-position: center;">蓝牙设备</h2>
+  <div class="page">
+    <div class="bd spacing">
+        <div class="weui_cells weui_cells_form">
+                
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label" style="width: auto;">当前设备:&nbsp</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                   <label id="lbdeviceid" class="weui_label" style="width: auto;"></label>
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label" style="width: auto;">状态信息:&nbsp</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <label id="lbInfo" class="weui_label" style="width: auto;"></label>
+                </div>
+            </div> 
+            <div class="weui_cell" >
+                <div class="weui_cell_hd"><label class="weui_label">日志:  </label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <textarea id="logtext" class="weui_textarea" placeholder="日志" rows="5"></textarea>
+                </div>
+            </div>
+  
+        </div>
+ 
+        <div>
+             
+            <button  id="CallGetWXrefresh" style="width:400px; height:100px;font-size:60px;">获取设备</button><br>
+            <button  id="getWXDeviceInfos" style="width:400px; height:100px;font-size:60px;">查看设备信息</button><br>
+            <button  id="startScanWXDevice" style="width:400px; height:100px;font-size:60px;">扫描设备</button><br>
+            <button  id="connectWXDevice" style="width:400px; height:100px;font-size:60px;">连接设备</button><br>
+            <button  id="disconnectWXDevice" style="width:400px; height:100px;font-size:60px;">断开连接</button><br>
+            <button  id="sendDataToWXDevice" style="width:400px; height:100px;font-size:60px;">发送数据</button><br>
+            
+            <button  id="accessIMG" style="width:400px; height:100px;font-size:60px;">获取图片</button><br>
+            <img id="newIMG"><img><br>
+        </div>
+  
+    </div>
+ 
+</body>
+</html>
