@@ -2,9 +2,9 @@ package com.wemarklinks.controller;
 
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wemarklinks.common.AESUtil;
@@ -12,6 +12,7 @@ import com.wemarklinks.common.JsonResult;
 import com.wemarklinks.common.ResultCode;
 
 import io.swagger.annotations.ApiOperation;
+import lombok.Data;
 
 @RestController
 @RequestMapping("/data")
@@ -66,11 +67,39 @@ public class DataController {
     
     @RequestMapping(value = "/openLock",method = RequestMethod.POST)
     @ApiOperation(value = "开锁")
-    public Map<String, Object> openLock(@RequestParam byte[] resultBytes){
-        System.out.println(resultBytes);
-        return null;
+    public Map<String, Object> openLock(@RequestBody WxData data){
+        byte[] bytes = stringToBytes(data.byteArray);
+        byte[] decrypt = AESUtil.Decrypt(bytes, PRIVATE_AES);
+        
+        access_token[0] = decrypt[3];
+        access_token[1] = decrypt[4];
+        access_token[2] = decrypt[5];
+        access_token[3] = decrypt[6];
+        
+        openlock[3] = password[0];
+        openlock[4] = password[1];
+        openlock[5] = password[2];
+        openlock[6] = password[3];
+        openlock[7] = password[4];
+        openlock[8] = password[5];
+        openlock[9] = access_token[0];
+        openlock[10] = access_token[1];
+        openlock[11] = access_token[2];
+        openlock[12] = access_token[3];
+        
+        byte[] encrypt = AESUtil.Encrypt(openlock, PRIVATE_AES);
+        String bytesToString = bytesToString(encrypt);
+        return JsonResult.RetJsone(ResultCode.SUCCESS, "success", bytesToString);
     }
     
+    public byte[] stringToBytes(String byteArray) {
+        String[] split = byteArray.split(",");
+        byte[] bytes = new byte[16];
+        for(int i = 0 ; i < split.length ; i++) {
+            bytes[i] = Byte.valueOf(split[i]);
+        }
+        return bytes;
+    }
     
     public String bytesToString(byte[] bytes) {
         String str = "[";
@@ -84,4 +113,10 @@ public class DataController {
         str += "]";
         return str;
     }
+    
+}
+
+@Data
+class WxData{
+    public String byteArray;
 }
